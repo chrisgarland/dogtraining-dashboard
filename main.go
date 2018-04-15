@@ -31,46 +31,14 @@ type Dog struct {
 	Oid   int64  `json:"oid,omitempty"`
 }
 
-func initLog() *os.File {
-	f, err := os.OpenFile("app.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Println("ERROR:", err)
-	} else {
-		log.SetOutput(f)
-		log.Println(`Log output successfully set to "log.txt"`)
-	}
-
-	return f
-}
-
-func main() {
-	logfile := initLog()
-	defer logfile.Close()
-	db, err = sql.Open("mysql", "administrator:administrator@tcp(testdb.c11gtkstiblb.ap-southeast-2.rds.amazonaws.com:3306)/test?charset=utf8")
-	check(err)
-	defer db.Close()
-
-	err = db.Ping()
-	check(err)
-
-	router := mux.NewRouter()
-
-	router.HandleFunc("/", index).Methods("GET")
-	router.HandleFunc("/clients", getClients).Methods("GET")
-	router.HandleFunc("/clients/", getClients).Methods("GET")
-	router.HandleFunc("/clients/{id}", getClient).Methods("GET")
-	router.HandleFunc("/new-client", insertClient).Methods("POST")
-	router.HandleFunc("/new-dogs", insertDogsForExistingClient).Methods("POST")
-	router.Handle("/favicon.ico", http.NotFoundHandler())
-	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
 func index(w http.ResponseWriter, req *http.Request) {
 	_, err := io.WriteString(w, "at index")
 	check(err)
 }
 
 func getClients(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var client Client
 	var clients []Client
 
@@ -90,6 +58,8 @@ func getClients(w http.ResponseWriter, r *http.Request) {
 }
 
 func getClient(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var client Client
 	params := mux.Vars(req)
 
@@ -182,4 +152,42 @@ func check(err error) {
 	if err != nil {
 		log.Println(err)
 	}
+}
+
+func initLog() *os.File {
+	f, err := os.OpenFile("app.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Println("ERROR:", err)
+	} else {
+		log.SetOutput(f)
+		log.Println(`Log output successfully set to "log.txt"`)
+	}
+
+	return f
+}
+
+func handleRequests() {
+	router := mux.NewRouter()
+	router.HandleFunc("/", index).Methods("GET")
+	router.HandleFunc("/clients", getClients).Methods("GET")
+	router.HandleFunc("/clients/{id}", getClient).Methods("GET")
+	router.HandleFunc("/clients", insertClient).Methods("POST")
+	router.HandleFunc("/dogs", insertDogsForExistingClient).Methods("POST")
+	router.Handle("/favicon.ico", http.NotFoundHandler())
+	log.Fatal(http.ListenAndServe(":8080", router))
+}
+
+func main() {
+	logfile := initLog()
+	defer logfile.Close()
+
+	dataSourceName := "administrator:administrator@tcp(testdb.c11gtkstiblb.ap-southeast-2.rds.amazonaws.com:3306)/test?charset=utf8"
+	if db, err = sql.Open("mysql", dataSourceName); err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	err = db.Ping()
+	check(err)
+
+	handleRequests()
 }
