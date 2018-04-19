@@ -22,7 +22,7 @@ func handleRequests() {
 	router.HandleFunc("/api/clients/batch", CreateClients).Methods("POST")
 	router.HandleFunc("/api/dogs", AddDogs).Methods("POST")
 	router.Handle("/favicon.ico", http.NotFoundHandler())
-	log.Fatal(http.ListenAndServe(":8080", router))
+    log.Fatal(http.ListenAndServe(":80", router))
 }
 
 func dbInit() {
