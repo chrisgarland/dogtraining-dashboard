@@ -9,6 +9,12 @@ type Dog struct {
 	ClientID int    `json:"oid,omitempty"`
 }
 
+func SelectClientDogs(clientId int64) []Dog {
+	var dogs []Dog
+	DBConn.Where("client_id", clientId).Find(&dogs)
+	return dogs
+}
+
 func InsertDogs(dogs []Dog) int64 {
 	return DBConn.Create(dogs).RowsAffected
 }

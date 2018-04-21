@@ -20,7 +20,7 @@ func SelectClients() []Client {
 
 func SelectClient(clientId int64) Client {
 	var client Client
-	DBConn.Preload("Dogs").First(&client, clientId)
+	DBConn.First(&client, clientId)
 	return client
 }
 
