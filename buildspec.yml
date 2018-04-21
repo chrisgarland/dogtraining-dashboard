@@ -1,0 +1,15 @@
+version: 0.0
+
+phases:
+    build:
+        commands:
+            - echo Build strated on `date`
+            - echo Compiling the Go code...
+            - GOOS=linux go build
+    post_build:
+        commands:
+            - echo Build completed on `date`
+artefacts:
+    files:
+        - dtd-server
+
