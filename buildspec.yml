@@ -3,11 +3,14 @@ version: 0.1
 # Test comment
 
 phases:
-  pre_build:
+  install:
     commands:
       - echo Installing dependencies...
       - go get -d ./...
       - echo dependencies installed on `date`
+  pre_build:
+    commands:
+      - echo This is where tests would be executed...
   build:
     commands:
       - echo Build strated on `date`
