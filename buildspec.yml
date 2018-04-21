@@ -20,7 +20,7 @@ phases:
     commands:
       - ls -l
       - echo Build completed on `date`
-artefacts:
+artifacts:
     files:
       - '**/*'
     discard-paths: no
