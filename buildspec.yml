@@ -1,5 +1,7 @@
 version: 0.1
 
+# Test comment
+
 phases:
   pre_build:
     commands:
