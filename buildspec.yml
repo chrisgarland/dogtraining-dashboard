@@ -1,15 +1,20 @@
 version: 0.1
 
 phases:
-    build:
-        commands:
-            - echo Build strated on `date`
-            - echo Compiling the Go code...
-            - GOOS=linux go build
-    post_build:
-        commands:
-            - echo Build completed on `date`
+  pre_build:
+    commands:
+      - echo Installing dependencies...
+      - go get -d ./...
+      - echo dependencies installed on `data`
+  build:
+    commands:
+      - echo Build strated on `date`
+      - echo Compiling the Go code...
+      - GOOS=linux go build
+  post_build:
+    commands:
+      - echo Build completed on `date`
 artefacts:
     files:
-        - dtd-server
+      - dtd-server
 
