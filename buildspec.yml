@@ -18,6 +18,7 @@ phases:
       - GOOS=linux go build -o dtd-server
   post_build:
     commands:
+      - ls -l
       - echo Build completed on `date`
 artefacts:
     files:
