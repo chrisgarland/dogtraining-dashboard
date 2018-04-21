@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Installing dependencies...
       - go get -d ./...
-      - echo dependencies installed on `data`
+      - echo dependencies installed on `date`
   build:
     commands:
       - echo Build strated on `date`
