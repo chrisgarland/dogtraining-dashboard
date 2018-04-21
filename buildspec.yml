@@ -12,7 +12,7 @@ phases:
     commands:
       - echo Build strated on `date`
       - echo Compiling the Go code...
-      - GOOS=linux go build
+      - GOOS=linux go build -o dtd-server
   post_build:
     commands:
       - echo Build completed on `date`
