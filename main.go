@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"net"
+	"fmt"
 )
 
 var (
@@ -16,13 +18,25 @@ var (
 
 func handleRequests() {
 	router := mux.NewRouter()
+	router.HandleFunc("/", index).Methods("GET")
 	router.HandleFunc("/api/clients", GetClients).Methods("GET")
 	router.HandleFunc("/api/clients/{id}", GetClient).Methods("GET")
 	router.HandleFunc("/api/clients", CreateClient).Methods("POST")
 	router.HandleFunc("/api/clients/batch", CreateClients).Methods("POST")
 	router.HandleFunc("/api/dogs", AddDogs).Methods("POST")
 	router.Handle("/favicon.ico", http.NotFoundHandler())
-    log.Fatal(http.ListenAndServe(":80", router))
+    log.Fatal(http.ListenAndServe(":8080", router))
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	fmt.Fprintln(w, "At INDEX...\nIP Address: ", localAddr)
 }
 
 func dbInit() {
