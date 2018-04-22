@@ -23,4 +23,6 @@ phases:
 artifacts:
     files:
       - dtd-server
+      - appspec.yml
+      - scripts/*
     discard-paths: no

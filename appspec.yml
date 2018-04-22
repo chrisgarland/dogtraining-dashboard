@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+  - source: dtd-server
+  - destination: /home/ubuntu/
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_application.sh
+      timeout: 300
+  ApplicationStart:
+    - location: scripts/start_appliaction.sh
+      timeout: 300
