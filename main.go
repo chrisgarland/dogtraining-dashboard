@@ -62,7 +62,7 @@ func main() {
 	logfile := initLog()
 	defer logfile.Close()
 
-	dataSourceName := "administrator:administrator@tcp(testdb.c11gtkstiblb.ap-southeast-2.rds.amazonaws.com:3306)/test?charset=utf8&parseTime=True&loc=Local"
+	dataSourceName := "administrator:administrator@tcp(dtd-clientmodel-rds.c11gtkstiblb.ap-southeast-2.rds.amazonaws.com:3306)/test?charset=utf8&parseTime=True&loc=Local"
 	DBConn, err = gorm.Open("mysql", dataSourceName)
 	defer DBConn.Close()
 	CheckFatal(err)
