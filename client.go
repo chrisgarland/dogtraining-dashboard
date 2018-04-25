@@ -14,8 +14,8 @@ type Client struct {
 
 func SelectClients() []Client {
 	var clients []Client
-	DBConn.Preload("Dogs").Find(&clients)
 	DBConn.Where("ID > ?", 10).Delete(&Client{})
+	DBConn.Find(&clients)
 	return clients
 }
 

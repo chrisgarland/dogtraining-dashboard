@@ -6,12 +6,28 @@ import (
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func GetClients(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	json.NewEncoder(w).Encode(SelectClients())
+
+	var clientsDTO [][5]string
+	clients := SelectClients()
+
+	for _, client := range clients {
+		clientDto := [5]string {
+			fmt.Sprint(client.ID),
+			client.Email,
+			client.Firstname,
+			client.Lastname,
+			time.Time.String(client.UpdatedAt),
+		}
+		clientsDTO  = append(clientsDTO, clientDto)
+	}
+
+	json.NewEncoder(w).Encode(clientsDTO)
 }
 
 func GetClient(w http.ResponseWriter, req *http.Request) {
