@@ -15,7 +15,7 @@ func InsertDogs(dogs []Dog) int64 {
 
 func SelectDos() []Dog {
 	var dogs []Dog
-	DBConn.Where("ClientID > ?", 10).Delete(&Dog{})
+	DBConn.Where("oid", 10).Delete(&Dog{})
 	DBConn.Find(&dogs)
 	return dogs
 }
