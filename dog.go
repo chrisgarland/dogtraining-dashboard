@@ -12,3 +12,9 @@ type Dog struct {
 func InsertDogs(dogs []Dog) int64 {
 	return DBConn.Create(dogs).RowsAffected
 }
+
+func SelectDos() []Dog {
+	var dogs []Dog
+	DBConn.Find(&dogs)
+	return dogs
+}
