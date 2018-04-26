@@ -15,7 +15,11 @@ func InsertDogs(dogs []Dog) int64 {
 
 func SelectDos() []Dog {
 	var dogs []Dog
-	DBConn.Where("oid > ?", 10).Delete(&Dog{})
 	DBConn.Find(&dogs)
 	return dogs
+}
+
+func DeleteDogs() error {
+	sqlString := "DELETE FROM dogs WHERE oid > ?"
+	return DBConn.Exec(sqlString, 10).Error
 }

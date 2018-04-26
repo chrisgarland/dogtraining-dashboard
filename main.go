@@ -24,6 +24,7 @@ func handleRequests() {
 	router.HandleFunc("/api/clients", CreateClient).Methods("POST")
 	router.HandleFunc("/api/clients/batch", CreateClients).Methods("POST")
 	router.HandleFunc("/api/dogs", GetDogs).Methods("GET")
+	router.HandleFunc("/api/dogs/delete", RemoveDogs).Methods("GET")
 	router.Handle("/favicon.ico", http.NotFoundHandler())
     log.Fatal(http.ListenAndServe(":80", router))
 }
