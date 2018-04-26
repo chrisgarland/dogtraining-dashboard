@@ -20,6 +20,6 @@ func SelectDos() []Dog {
 }
 
 func DeleteDogs() error {
-	sqlString := "DELETE FROM dogs WHERE oid > ?"
+	sqlString := "DELETE FROM dogs WHERE client_id > ?"
 	return DBConn.Exec(sqlString, 10).Error
 }
