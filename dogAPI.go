@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"log"
 )
 
 func GetDogs(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +21,7 @@ func AddDogs(w http.ResponseWriter, req *http.Request) {
 
 func RemoveDogs(w http.ResponseWriter, req *http.Request) {
 	if err := DeleteDogs(); err != nil {
-		log.Println(err)
+		fmt.Fprintln(w, err)
 	} else {
 		fmt.Fprintln(w, "Successfully deleted dogs")
 	}
